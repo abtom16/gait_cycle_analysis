@@ -3,10 +3,10 @@ addpath(genpath(fullfile(pwd,'..', '..')));
 
 %% Configuration for Analysis
 % Analyse 'Left' or 'Right' foot
-target_foot = 'Left';  % If you want to analyse right foot, change to 'Right'
+target_foot = 'Incomplete_Left';  % If you want to analyse right foot, change to 'Right'
 [nw_paths, filenames] = getSubjectDataNW(target_foot);
 
-save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_clinical-analysis\03_ShinAngle\angle-angularvelo';
+save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_NW_analysis\03_ShinAngle\angle-angularvelo';
 target_filename = '_shin-anglevelo-NW.png';
 
 
@@ -24,7 +24,7 @@ NW_RANGE_COLOR_LEFT = [0.8 0.8 0.8];
 %%  data calculation for each procedure
 UNIFORM_LENGTH = 100;
 
-if strcmp(target_foot, 'Nondisabled')
+if strcmp(target_foot, 'Nondisabled')  || strcmp(target_foot, 'Incomplete_Left')
     iteration_setup = 1:length(nw_paths);
 else
     iteration_setup = 1:2:length(nw_paths);
@@ -230,7 +230,7 @@ for p_idx = iteration_setup
             'FontSize',14, 'EdgeColor','k', 'BackgroundColor','w', 'HorizontalAlignment','center');
     end
 
-    if strcmp(target_foot, 'Nondisabled')
+    if strcmp(target_foot, 'Nondisabled') || strcmp(target_foot, 'Incomplete_Left')
         save_filename = [filenames{p_idx}, target_filename];
     else
         save_filename = [filenames{ceil(p_idx/2)}, target_filename];
@@ -242,6 +242,9 @@ for p_idx = iteration_setup
     
     set(fig, 'Visible', 'off');
 end
+close all;
+clear all;
+disp('Completly Successed!')
 
 function Shin_Minus_Background(mean_unaffected_footoff_timing, shin_zero_timing)
     ax = gca;

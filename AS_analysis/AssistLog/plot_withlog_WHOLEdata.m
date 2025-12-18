@@ -8,7 +8,7 @@ addpath(genpath(fullfile(pwd,'..', '..', '..')));
 
 paretic_side = 'Left';
 [filepaths, log_paths, sync_frames, filenames] = getAssistData(paretic_side);
-save_dir = ['C:\abe_backup\backup\01_修士\06_Xsens_analysis\10_Assist_Log_whole11m\3graph_ver'];
+save_dir = ['C:\abe_backup\backup\01_修士\06_Xsens_analysis\06_assist_timing_analysis\3_11m\3graph_ver'];
 
 f = waitbar(0, 'Processing...');
 
@@ -259,6 +259,7 @@ for i=1:length(filepaths)
     progress = i / length(filepaths);
     waitbar(progress, f, 'Progressing...');
 end
+close(f);
 clear all;
 disp('Completely Processed!')
 

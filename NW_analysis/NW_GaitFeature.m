@@ -4,7 +4,7 @@ addpath(genpath(fullfile(pwd,'..', '..')));
 
 %% Configuration for Analysis
 % Analyse 'Left' or 'Right' foot
-target_foot = 'Right';  % If you want to analyse right foot, change to 'Right' 
+target_foot = 'Incomplete_Left';  % If you want to analyse right foot, change to 'Right' 
 target_move = 'Hip Flexion';
 
 if strcmp(target_foot, 'Left')
@@ -17,17 +17,17 @@ if strcmp(target_move, 'Hip Flexion')
     target_joint = [target_side,'Hip'];
     target_axis = 'extension';
     filename_target_joint = '_HipEx.png';
-    save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_clinical-analysis\02_HipEx';
+    save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_NW_analysis\02_HipEx';
 elseif strcmp(target_move, 'Knee Angle')
     target_joint = [target_side,'Knee'];
     target_axis = 'angle';
     filename_target_joint = '_Knee-NW.png';
-    save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_clinical-analysis\Knee';
+    save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_NW_analysis\Knee';
 elseif strcmp(target_move, 'Ankle Angle')
     target_joint = [target_side, 'Ankle'];
     target_axis = 'angle';
     filename_target_joint = '_Ankle.png';
-    save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_clinical-analysis\Ankle';
+    save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_NW_analysis\Ankle';
 end
 
 [nw_paths, filenames] = getSubjectDataNW(target_foot);
@@ -43,7 +43,7 @@ NW_RANGE_COLOR = [0.6 0.9 0.9];
 %%  data calculation for each procedure
 uniform_length = 100;
 
-if strcmp(target_foot, 'Nondisabled')
+if strcmp(target_foot, 'Nondisabled') || strcmp(target_foot, 'Incomplete_Left')
     iteration_setup = 1:length(nw_paths);
 else
     iteration_setup = 1:2:length(nw_paths);
@@ -266,7 +266,7 @@ for p_idx = iteration_setup
     
     % legend('Location','northeast');
     
-    if strcmp(target_foot, 'Nondisabled')
+    if strcmp(target_foot, 'Nondisabled') || strcmp(target_foot, 'Incomplete_Left')
         save_filename = [filenames{p_idx}, filename_target_joint];
     else
         save_filename = [filenames{ceil(p_idx/2)}, filename_target_joint];

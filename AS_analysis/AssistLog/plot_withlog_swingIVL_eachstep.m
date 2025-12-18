@@ -4,7 +4,7 @@ addpath(genpath(fullfile(pwd,'..', '..','..')));
 paretic_side = 'Left';
 [filepaths, log_paths, sync_frames, filenames] = getAssistData(paretic_side);
 target_joint = 'Hip Flexion';
-save_path = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\06_Assist_Log_forMLInput';
+save_path = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\06_assist_timing_analysis\2_detail_assist_timing';
 
 f = waitbar(0, 'Progressing...');
 

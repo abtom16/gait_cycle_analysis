@@ -2,11 +2,10 @@ clc;
 addpath(genpath(fullfile(pwd,'..', '..'))); 
 
 % Analyse 'Left' or 'Right' foot
-target_foot = 'Left';  % If you want to analyse right foot, change to 'Right'
-save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_clinical-analysis\01_CoM_z';
+target_foot = 'Incomplete_Left';  % If you want to analyse right foot, change to 'Right'
+save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_NW_analysis\01_CoM_z';
 [nw_paths, filenames] = getSubjectDataNW(target_foot);
 % write_data_file = "C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_clinical-analysis\01_CoM_z\CoM_vertical_excursion.xlsx";
-
 % for lowpass filter
 CUTOFF = 10;
 FZ = 60;
@@ -20,7 +19,7 @@ DR_RANGE_COLOR = [0.4 0.6 1];
 %%  data calculation for each procedure
 uniform_length = 100;
 
-if strcmp(target_foot, 'Nondisabled')
+if strcmp(target_foot, 'Nondisabled') || strcmp(target_foot, 'Incomplete_Left')
     iteration_setup = 1:length(nw_paths);
 else
     iteration_setup = 1:2:length(nw_paths);
@@ -144,7 +143,7 @@ for p_idx = iteration_setup
         'HorizontalAlignment','left', 'VerticalAlignment','top', 'BackgroundColor', 'w'); hold on;
     text(maxidx_nw_stance_xaxis, max_nw_stance+0.3, sprintf('Vertical CoM Excursion\n %.2f ± %.2f cm  at %d%%', mean_CoM_vertical_excursion, std_CoM_vertical_excursion, maxidx_nw_stance), ...
         "FontSize",12,'Color','b', 'HorizontalAlignment','center', 'VerticalAlignment','bottom', 'BackgroundColor', 'w'); hold on;
-    if strcmp(target_foot, 'Nondisabled')
+    if strcmp(target_foot, 'Nondisabled') || strcmp(target_foot, 'Incomplete_Left')
         save_filename = [filenames{p_idx}, '_CoM_z-NW.png'];
     else
         save_filename = [filenames{ceil(p_idx/2)}, '_CoM_z-NW.png'];

@@ -3,10 +3,10 @@ addpath(genpath(fullfile(pwd,'..', '..')));
 
 %% Configuration for Analysis
 % Analyse 'Left' or 'Right' foot
-target_foot = 'Left';  % If you want to analyse right foot, change to 'Right'
-[nw_paths, filenames] = getSubjectData(target_foot);
+target_foot = 'Nondisabled';  % If you want to analyse right foot, change to 'Right'
+[nw_paths, filenames] = getSubjectDataNW(target_foot);
 
-save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_clinical-analysis\TLAAngle';
+save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_NW_analysis\TLAAngle\able-bodied';
 target_filename = '_tla-NW.png';
 
 
@@ -23,8 +23,13 @@ DR_RANGE_COLOR = [0.4 0.6 1];
 %%  data calculation for each procedure
 uniform_length = 100;
 
+if strcmp(target_foot, 'Nondisabled') || strcmp(target_foot, 'Incomplete_Left')
+    iteration_setup = 1:length(nw_paths);
+else 
+    iteration_setup = 1:2:length(nw_paths);
+end
 % NW
-for p_idx = 1:2:length(nw_paths)
+for p_idx = iteration_setup
     all_nw_resampled_angles = [];
     all_unaffected_footoff_timing = [];
     all_unaffected_contact_timing = [];
@@ -130,9 +135,7 @@ for p_idx = 1:2:length(nw_paths)
     nw_std_max = nw_mean_resampled + nw_std_resampled;
     nw_std_min = nw_mean_resampled - nw_std_resampled;
     
-    abs_angles = abs(nw_mean_resampled);
-    [min_val, tla_zero_timing] = min(abs_angles(1:40));
-    tla_zero_timing = tla_zero_timing - 1;
+    [max_val, max_idx] = max(nw_mean_resampled);
     
     %  -- plot
     fig = figure('Visible','off', 'Position',[500 400 560 420]); 
@@ -152,14 +155,13 @@ for p_idx = 1:2:length(nw_paths)
     plot(nw_uniform_x, nw_mean_resampled, '--', 'Color', NW_MEAN_COLOR, ...
         'DisplayName', 'Normal Walking', 'LineWidth', 1.5); hold on;
     
-    %% 脛の角度が0になるタイミング
+    %% TLAの最大角度
+    plot([max_idx/100-0.2, max_idx/100+0.2], [max_val, max_val], '--b'); hold on;
+    text(max_idx/100, max_val+3, sprintf('MAX %.2f deg (at %d%%)', max_val, round(max_idx)), ...
+        'FontSize',14,'HorizontalAlignment','Right', 'VerticalAlignment','bottom','EdgeColor', 'k', 'BackgroundColor','w');
     
-    % plot([tla_zero_timing/100, tla_zero_timing/100], [-30, 30], '--b'); hold on;
-    % text(tla_zero_timing/100, min_val-5, sprintf('Vertical Timing: %d', tla_zero_timing), ...
-    %     'FontSize',14, 'EdgeColor', 'k', 'BackgroundColor','w');
-    
-    if strcmp(target_foot, 'Nondisabled')
-        save_filename = [filenames{p_idx}];
+    if strcmp(target_foot, 'Nondisabled') || strcmp(target_foot, 'Incomplete_Left')
+        save_filename = [filenames{p_idx}, target_filename];
     else
         save_filename = [filenames{ceil(p_idx/2)}, target_filename];
     end
