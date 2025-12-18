@@ -7,7 +7,7 @@ addpath(genpath(fullfile(pwd,'..', '..')));
 target_foot = 'Incomplete_Left';  % If you want to analyse right foot, change to 'Right' 
 target_move = 'Hip Flexion';
 
-if strcmp(target_foot, 'Left')
+if strcmp(target_foot, 'Left') || strcmp(target_foot, 'Incomplete_Left')
     target_side = 'L';
 else
     target_side = 'R';
