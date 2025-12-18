@@ -3,10 +3,10 @@ addpath(genpath(fullfile(pwd,'..', '..')));
 
 %% Configuration for Analysis
 % Analyse 'Left' or 'Right' foot
-target_foot = 'Nondisabled';  % If you want to analyse right foot, change to 'Right'
+target_foot = 'Incomplete_Left';  % If you want to analyse right foot, change to 'Right'
 [nw_paths, filenames] = getSubjectDataNW(target_foot);
 
-save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_NW_analysis\TLAAngle\able-bodied';
+save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_NW_analysis\04_TLAAngle';
 target_filename = '_tla-NW.png';
 
 
@@ -39,7 +39,7 @@ for p_idx = iteration_setup
     [nw_Rcontact_frame,nw_Rcontact_end_frame,nw_Lcontact_frame, nw_Lcontact_end_frame] = ...
         detectValidFootContacts(current_nw_data.RFootContact, current_nw_data.LFootContact);
     
-    if strcmpi(target_foot, 'Left')
+    if strcmpi(target_foot, 'Left') || strcmp(target_foot, 'Incomplete_Left')
         current_nw_contact_frame = nw_Lcontact_frame;
         current_nw_contact_end_frame = nw_Lcontact_end_frame;
         foot_side='LFoot';

@@ -4,10 +4,10 @@ addpath(genpath(fullfile(pwd,'..', '..')));
 
 %% Configuration for Analysis
 % Analyse 'Left' or 'Right' foot
-target_foot = 'Right';  % If you want to analyse right foot, change to 'Right' 
-save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_clinical-analysis\ToeClearance';
+target_foot = 'Incomplete_Left';  % If you want to analyse right foot, change to 'Right' 
+save_folder = 'C:\abe_backup\backup\01_修士\06_Xsens_analysis\07_NW_analysis\ToeClearance';
 
-[nw_paths, filenames] = getSubjectData(target_foot);
+[nw_paths, filenames] = getSubjectDataNW(target_foot);
 
 if strcmp(target_foot, 'Left')
     target_side = 'L';
@@ -49,7 +49,7 @@ for p_idx = iteration_setup
     [nw_Rcontact_frame,nw_Rcontact_end_frame,nw_Lcontact_frame, nw_Lcontact_end_frame] = ...
         detectValidFootContacts(current_nw_data.RFootContact, current_nw_data.LFootContact);
     
-    if strcmpi(target_foot, 'Left')
+    if strcmpi(target_foot, 'Left') || strcmp(target_foot, 'Incomplete_Left')
         current_nw_contact_frame = nw_Lcontact_frame;
         current_nw_contact_end_frame = nw_Lcontact_end_frame;
         current_unaffected_contact = nw_Rcontact_frame;

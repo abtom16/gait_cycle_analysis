@@ -33,7 +33,7 @@ for p_idx = iteration_setup
     [nw_Rcontact_frame,nw_Rcontact_end_frame,nw_Lcontact_frame, nw_Lcontact_end_frame] = ...
         detectValidFootContacts(current_nw_data.RFootContact, current_nw_data.LFootContact);
     
-    if strcmpi(target_foot, 'Left')
+    if strcmpi(target_foot, 'Left') || strcmp(target_foot, 'Incomplete_Left')
         current_nw_contact_frame = nw_Lcontact_frame;
         current_nw_contact_end_frame = nw_Lcontact_end_frame;
     else  % only case for Right
